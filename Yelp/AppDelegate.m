@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "UIColor+Yelp.h"
 
 @implementation AppDelegate
 
@@ -15,7 +16,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[MainViewController alloc] init];
+    MainViewController * mainViewController = [[MainViewController alloc] init];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    self.window.rootViewController = navController;
+
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor yelpRedColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor yelpRedColor]];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
