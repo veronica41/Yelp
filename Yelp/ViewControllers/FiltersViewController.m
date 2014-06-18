@@ -11,11 +11,15 @@
 #import "FiltersTableHeaderCell.h"
 #import "DropdownCell.h"
 #import "YelpCategories.h"
+#import "RadiusCell.h"
+#import "DealsCell.h"
 
 #define CATEOGIES_LIMITS 10
 
 static NSString * headerCellIdentifier = @"FiltersTableHeaderCell";
 static NSString * dropdownCellIdentifier = @"DropdownCell";
+static NSString * radiusCellIdentifier = @"RadiusCell";
+static NSString * dealsCellIdentifier = @"DealsCell";
 
 static YelpCategories * _categoriesOptions;
 static NSArray * _sortByOptions;
@@ -76,6 +80,12 @@ typedef enum {
 
     UINib *dropdownCellNib = [UINib nibWithNibName:dropdownCellIdentifier bundle:nil];
     [_tableView registerNib:dropdownCellNib forCellReuseIdentifier:dropdownCellIdentifier];
+
+    UINib *radiusCellNib = [UINib nibWithNibName:radiusCellIdentifier bundle:nil];
+    [_tableView registerNib:radiusCellNib forCellReuseIdentifier:radiusCellIdentifier];
+
+    UINib *dealsCellNib = [UINib nibWithNibName:dealsCellIdentifier bundle:nil];
+    [_tableView registerNib:dealsCellNib forCellReuseIdentifier:dealsCellIdentifier];
 }
 
 #pragma mark - UITableViewDataSource
@@ -106,7 +116,7 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -121,7 +131,7 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 30;
+    return 39;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,9 +151,13 @@ typedef enum {
         return cell;
     }
     if (indexPath.section == RadiusSection) {
+        RadiusCell * cell = [_tableView dequeueReusableCellWithIdentifier:radiusCellIdentifier];
+        return cell;
     }
     if (indexPath.section == DealsSection) {
-        
+        DealsCell * cell = [_tableView dequeueReusableCellWithIdentifier:dealsCellIdentifier];
+        cell.dealsLabel.text = @"Offering a deal";
+        return cell;
     }
     if (indexPath.section == CategoriesSection) {
         

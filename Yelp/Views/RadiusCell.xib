@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="39" id="KGk-i7-Jjw" customClass="RadiusCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="38"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x1k-Av-9pt">
+                        <rect key="frame" x="14" y="4" width="232" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Jea-ZP-HXe"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Ni5-MY-IHp"/>
+                        </constraints>
+                    </slider>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccl-Kk-zVE">
+                        <rect key="frame" x="260" y="8" width="44" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="Mnh-DP-b4G"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ccl-Kk-zVE" secondAttribute="trailing" constant="16" id="IUl-z4-YwJ"/>
+                    <constraint firstItem="ccl-Kk-zVE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="LxH-Jb-1od"/>
+                    <constraint firstItem="x1k-Av-9pt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Ozu-v7-mTL"/>
+                    <constraint firstItem="x1k-Av-9pt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Xcw-US-2k0"/>
+                    <constraint firstItem="ccl-Kk-zVE" firstAttribute="leading" secondItem="x1k-Av-9pt" secondAttribute="trailing" constant="16" id="dRp-19-Vd4"/>
+                    <constraint firstAttribute="bottom" secondItem="ccl-Kk-zVE" secondAttribute="bottom" constant="9" id="y0t-Qt-OHM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="radiusLabel" destination="ccl-Kk-zVE" id="Ywx-hL-S3e"/>
+                <outlet property="slider" destination="x1k-Av-9pt" id="1Hb-dV-1VW"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
