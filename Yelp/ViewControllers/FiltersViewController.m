@@ -187,6 +187,9 @@ typedef enum {
             [cell.textLabel setTextColor:[UIColor blackColor]];
             [cell.textLabel setTextAlignment:NSTextAlignmentLeft];
         }
+        if ([_filterOption.categories containsObject:[NSNumber numberWithInteger:indexPath.row]]) {
+            [cell setSelected:YES];
+        }
         return cell;
     }
     return nil;
@@ -206,7 +209,7 @@ typedef enum {
             _categoriesExpanded = YES;
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:CategoriesSection] withRowAnimation:UITableViewRowAnimationFade];
         } else {
-            
+            [_filterOption.categories insertObject:[NSNumber numberWithInteger:indexPath.row] atIndex:0];
         }
     }
 }
@@ -265,7 +268,7 @@ typedef enum {
 }
 
 - (void)searchButtonHandler:(id)sender {
-
+    
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
