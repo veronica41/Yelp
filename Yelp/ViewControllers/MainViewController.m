@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "FilterOption.h"
 
+
 static NSString *cellIdentifier = @"YelpTableViewCell";
 
 @interface MainViewController ()
@@ -19,7 +20,6 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 @property (nonatomic, strong) CLLocation * currLocation;
 
 @property (nonatomic, strong) UISearchBar * searchBar;
-//@property (nonatomic, strong) UIButton * filterButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) YelpTableViewCell * prototypeCell;

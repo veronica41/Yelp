@@ -37,6 +37,10 @@
 		96667E421951247F00F2C95A /* DropdownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E401951247F00F2C95A /* DropdownCell.m */; };
 		96667E431951247F00F2C95A /* DropdownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E411951247F00F2C95A /* DropdownCell.xib */; };
 		96667E4619512CD000F2C95A /* FilterOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E4519512CD000F2C95A /* FilterOption.m */; };
+		96667E491951363900F2C95A /* YelpCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E481951363900F2C95A /* YelpCategories.m */; };
+		96667E4B1951365200F2C95A /* categories.txt in Resources */ = {isa = PBXBuildFile; fileRef = 96667E4A1951365200F2C95A /* categories.txt */; };
+		96667E4F195146A800F2C95A /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E4D195146A800F2C95A /* OptionCell.m */; };
+		96667E50195146A800F2C95A /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E4E195146A800F2C95A /* OptionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +98,12 @@
 		96667E411951247F00F2C95A /* DropdownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropdownCell.xib; path = Views/DropdownCell.xib; sourceTree = "<group>"; };
 		96667E4419512CD000F2C95A /* FilterOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterOption.h; path = Models/FilterOption.h; sourceTree = "<group>"; };
 		96667E4519512CD000F2C95A /* FilterOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOption.m; path = Models/FilterOption.m; sourceTree = "<group>"; };
+		96667E471951363900F2C95A /* YelpCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YelpCategories.h; path = Utilities/YelpCategories.h; sourceTree = "<group>"; };
+		96667E481951363900F2C95A /* YelpCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YelpCategories.m; path = Utilities/YelpCategories.m; sourceTree = "<group>"; };
+		96667E4A1951365200F2C95A /* categories.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = categories.txt; sourceTree = "<group>"; };
+		96667E4C195146A800F2C95A /* OptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionCell.h; path = Views/OptionCell.h; sourceTree = "<group>"; };
+		96667E4D195146A800F2C95A /* OptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionCell.m; path = Views/OptionCell.m; sourceTree = "<group>"; };
+		96667E4E195146A800F2C95A /* OptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionCell.xib; path = Views/OptionCell.xib; sourceTree = "<group>"; };
 		9DEC6D18C14F46F8AF2EA320 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -129,6 +139,9 @@
 				96667DFA19504E8600F2C95A /* YelpImageHelper.m */,
 				96667DFB19504E8600F2C95A /* YelpClient.h */,
 				96667DFC19504E8600F2C95A /* YelpClient.m */,
+				96667E471951363900F2C95A /* YelpCategories.h */,
+				96667E481951363900F2C95A /* YelpCategories.m */,
+				96667E4A1951365200F2C95A /* categories.txt */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -273,6 +286,9 @@
 				96667E3F1951247F00F2C95A /* DropdownCell.h */,
 				96667E401951247F00F2C95A /* DropdownCell.m */,
 				96667E411951247F00F2C95A /* DropdownCell.xib */,
+				96667E4C195146A800F2C95A /* OptionCell.h */,
+				96667E4D195146A800F2C95A /* OptionCell.m */,
+				96667E4E195146A800F2C95A /* OptionCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -356,8 +372,10 @@
 			files = (
 				96667DE219501AB800F2C95A /* filter@2x.png in Resources */,
 				96667E25195110B100F2C95A /* FiltersViewController.xib in Resources */,
+				96667E50195146A800F2C95A /* OptionCell.xib in Resources */,
 				96667E201950D2B100F2C95A /* YelpTableViewCell.xib in Resources */,
 				96667DCD195016E300F2C95A /* filter.png in Resources */,
+				96667E4B1951365200F2C95A /* categories.txt in Resources */,
 				96667E1B1950CD5500F2C95A /* MainViewController.xib in Resources */,
 				96667E3E19511DC700F2C95A /* FiltersTableHeaderCell.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
@@ -419,6 +437,8 @@
 				96667E3D19511DC700F2C95A /* FiltersTableHeaderCell.m in Sources */,
 				96667DFD19504E8600F2C95A /* YelpImageHelper.m in Sources */,
 				96667E4619512CD000F2C95A /* FilterOption.m in Sources */,
+				96667E491951363900F2C95A /* YelpCategories.m in Sources */,
+				96667E4F195146A800F2C95A /* OptionCell.m in Sources */,
 				96667E1A1950CD5500F2C95A /* MainViewController.m in Sources */,
 				96667E1F1950D2B100F2C95A /* YelpTableViewCell.m in Sources */,
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,

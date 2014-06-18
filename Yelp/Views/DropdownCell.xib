@@ -20,7 +20,7 @@
                             <constraint firstAttribute="height" constant="21" id="8RT-VG-f3x"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="O3C-Uu-Mtt"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_collapse" translatesAutoresizingMaskIntoConstraints="NO" id="lbO-w2-8FQ">
