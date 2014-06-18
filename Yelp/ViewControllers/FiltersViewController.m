@@ -135,7 +135,7 @@ typedef enum {
     }
     if (section == CategoriesSection) {
         if (!_categoriesExpanded) {
-            return 6;
+            return 5;
         }
         return _categoriesOptions.categoriesDict.allKeys.count;
     }
@@ -143,7 +143,7 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == CategoriesSection) return 37;
+    if (indexPath.section == CategoriesSection) return 39;
     return 39;
 }
 
@@ -178,7 +178,7 @@ typedef enum {
     if (indexPath.section == CategoriesSection) {
         UITableViewCell * cell = [_tableView dequeueReusableCellWithIdentifier:categoriesCellIdentifier];
         [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
-        if (!_categoriesExpanded && indexPath.row == 5) {
+        if (!_categoriesExpanded && indexPath.row == 4) {
             cell.textLabel.text = @"See All";
             [cell.textLabel setTextColor:[UIColor yelpRedColor]];
             [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
@@ -205,7 +205,7 @@ typedef enum {
             [self collapseSortBySectionWithRow:indexPath.row];
         }
     } else if (indexPath.section == CategoriesSection) {
-        if (!_categoriesExpanded && indexPath.row == 5) {
+        if (!_categoriesExpanded && indexPath.row == 4) {
             _categoriesExpanded = YES;
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:CategoriesSection] withRowAnimation:UITableViewRowAnimationFade];
         } else {
@@ -227,7 +227,7 @@ typedef enum {
     }
     [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
     NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
-    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationFade];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 - (void)collapseSortBySectionWithRow:(NSInteger)row {
@@ -268,7 +268,7 @@ typedef enum {
 }
 
 - (void)searchButtonHandler:(id)sender {
-    
+    [self.delegate searchWithFilterOption:_filterOption];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 

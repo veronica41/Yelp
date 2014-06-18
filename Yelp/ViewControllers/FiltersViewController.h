@@ -11,7 +11,7 @@
 
 @protocol FiltersViewControllerDelegate <NSObject>
 
-
+- (void)searchWithFilterOption:(FilterOption *)fiterOption;
 
 @end
 

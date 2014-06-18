@@ -151,6 +151,23 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
     return size.height+1;
 }
 
+#pragma mark - FiltersViewControllerDelegate
+
+- (void)searchWithFilterOption:(FilterOption *)filterOption {
+    _searchBar.text = filterOption.term;
+    [self.client searchWithFilterOption:filterOption success:^(AFHTTPRequestOperation *operation, id response) {
+        _businesses = [Business businessesWithData:response];
+        [_tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[error localizedDescription]
+                                                       message:[error localizedRecoverySuggestion]
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
 #pragma mark - button handlers
 
 - (void)filterButtonHandler:(id)sender {
