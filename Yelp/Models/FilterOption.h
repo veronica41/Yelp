@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define BEST_MATCHED @"Best matched"
+#define DISTANCE @"Distance"
+#define HIGHEST_RATED @"Highest rated"
+
 typedef enum {
     sortModeBestMatched = 0,
     sortModeDistance = 1,
@@ -21,7 +25,7 @@ typedef enum {
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
 @property (nonatomic) double radiusFilter;
-@property (nonatomic) sortMode sort;
+@property (nonatomic) sortMode sortFilter;
 @property (nonatomic) BOOL dealsFilter;
 @property (nonatomic, strong) NSMutableArray * categories;
 

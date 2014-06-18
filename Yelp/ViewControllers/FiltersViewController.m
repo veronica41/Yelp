@@ -10,19 +10,15 @@
 #import "UIColor+Yelp.h"
 #import "FiltersTableHeaderCell.h"
 #import "DropdownCell.h"
-#import "OptionCell.h"
 #import "YelpCategories.h"
 
 #define CATEOGIES_LIMITS 10
-#define BEST_MATCHED @"Best matched"
-#define DISTANCE @"Distance"
-#define HIGHEST_RATED @"Highest rated"
 
 static NSString * headerCellIdentifier = @"FiltersTableHeaderCell";
 static NSString * dropdownCellIdentifier = @"DropdownCell";
-static NSString * optionCellIdentifier = @"OptionCell";
 
 static YelpCategories * _categoriesOptions;
+static NSArray * _sortByOptions;
 
 typedef enum {
     SortBySection = 0,
@@ -34,19 +30,20 @@ typedef enum {
 @interface FiltersViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (nonatomic) BOOL sortByExpanded;
 @property (nonatomic) BOOL sortByCollapsing;
 
 @property (nonatomic) BOOL categoriesExpanded;
 
-@property (nonatomic, strong) NSMutableArray * sortByOptions;
-
 @end
+
 
 @implementation FiltersViewController
 
 + (void)initialize {
     _categoriesOptions = [[YelpCategories alloc] init];
+    _sortByOptions = @[BEST_MATCHED, DISTANCE, HIGHEST_RATED];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,19 +55,14 @@ typedef enum {
                                                                                  style:UIBarButtonItemStylePlain
                                                                                 target:self
                                                                                 action:@selector(searchButtonHandler:)];
+        _filterOption = [[FilterOption alloc] init];
+ 
         _sortByExpanded = NO;
-        _sortByCollapsing = NO;
-        _categoriesExpanded = NO;
+        _sortByExpanded = NO;
 
-        _sortByOptions = [@[BEST_MATCHED, DISTANCE, HIGHEST_RATED] mutableCopy];
+        _categoriesExpanded = NO;
     }
     return self;
-}
-
-- (void)setFilterOption:(FilterOption *)filterOption {
-    NSString * str = _sortByOptions[_filterOption.sort];
-    [_sortByOptions removeObjectAtIndex:_filterOption.sort];
-    [_sortByOptions insertObject:str atIndex:0];
 }
 
 - (void)viewDidLoad {
@@ -84,9 +76,6 @@ typedef enum {
 
     UINib *dropdownCellNib = [UINib nibWithNibName:dropdownCellIdentifier bundle:nil];
     [_tableView registerNib:dropdownCellNib forCellReuseIdentifier:dropdownCellIdentifier];
-
-    UINib *optionCellNib = [UINib nibWithNibName:optionCellIdentifier bundle:nil];
-    [_tableView registerNib:optionCellNib forCellReuseIdentifier:optionCellIdentifier];
 }
 
 #pragma mark - UITableViewDataSource
@@ -120,6 +109,9 @@ typedef enum {
     return 30;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == SortBySection) {
@@ -134,20 +126,19 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == SortBySection) {
+        DropdownCell * cell = [_tableView dequeueReusableCellWithIdentifier:dropdownCellIdentifier];
         if (indexPath.row == 0 && !_sortByExpanded) {
-            DropdownCell * cell = [_tableView dequeueReusableCellWithIdentifier:dropdownCellIdentifier];
-            cell.nameLabel.text = _sortByOptions[0];
-            return cell;
+            cell.nameLabel.text = _sortByOptions[_filterOption.sortFilter];
+            cell.dropDownButton.image = [UIImage imageNamed:@"arrow_collapse"];
         } else {
-            OptionCell * cell = [_tableView dequeueReusableCellWithIdentifier:optionCellIdentifier];
             cell.nameLabel.text = _sortByOptions[indexPath.row];
-            if (indexPath.row == _filterOption.sort) {
-                cell.radioButton.image = [UIImage imageNamed:@"settings-radio-selected"];
+            if (_filterOption.sortFilter == indexPath.row) {
+                cell.dropDownButton.image = [UIImage imageNamed:@"settings-radio-selected"];
             } else {
-                cell.radioButton.image = [UIImage imageNamed:@"settings-radio-unselected"];
+                cell.dropDownButton.image = [UIImage imageNamed:@"settings-radio-unselected"];
             }
-            return cell;
         }
+        return cell;
     }
     if (indexPath.section == RadiusSection) {
     }
@@ -169,11 +160,9 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == SortBySection) {
-        if (!_sortByExpanded && indexPath.row == 0) {
-            _sortByExpanded = !_sortByExpanded;
+        if (!_sortByExpanded) {
             [self expandSortBySection];
         } else if (_sortByExpanded) {
-            _sortByExpanded = !_sortByExpanded;
             [self collapseSortBySectionWithRow:indexPath.row];
         }
     }
@@ -182,6 +171,8 @@ typedef enum {
 // sort by section helpers
 
 - (void)expandSortBySection {
+    _sortByExpanded = YES;
+
     NSInteger rows = _sortByOptions.count;
     NSMutableArray * indexPaths = [[NSMutableArray alloc] init];
     for (int i = 1; i < rows; i++) {
@@ -191,18 +182,26 @@ typedef enum {
     [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
     NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
     [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationFade];
-    
-
 }
 
 - (void)collapseSortBySectionWithRow:(NSInteger)row {
-    NSString * str = [_sortByOptions objectAtIndex:row];
-    [_sortByOptions removeObjectAtIndex:row];
-    [_sortByOptions insertObject:str atIndex:0];
-    _filterOption.sort = [self sortModeFromTitle:str];
-
-    _sortByCollapsing = YES;
+    int oldSelection = _filterOption.sortFilter;
+    _filterOption.sortFilter = (sortMode)row;
+    // change radio button selection
     NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:row inSection:0]];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
+    reloadPaths = @[[NSIndexPath indexPathForRow:oldSelection inSection:0]];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
+
+    _sortByExpanded = NO;
+    // introduce delay
+    [self performSelector:@selector(removeRows) withObject:self afterDelay:0.5 inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+}
+
+// helper for collapse
+- (void)removeRows {
+    _sortByCollapsing = YES;
+    NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
     [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
     _sortByCollapsing = NO;
 
@@ -213,11 +212,6 @@ typedef enum {
         [indexPaths insertObject:indexPath atIndex:0];
     }
     [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
-    
-    reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
-    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationFade];
-    
-
 }
 
 
@@ -234,11 +228,5 @@ typedef enum {
 
 #pragma mark - helper
 
-- (sortMode)sortModeFromTitle:(NSString *)title {
-    if ([title isEqualToString:BEST_MATCHED]) return sortModeBestMatched;
-    if ([title isEqualToString:DISTANCE]) return sortModeDistance;
-    if ([title isEqualToString:HIGHEST_RATED]) return sortModeHighestRated;
-    return -1;
-}
 
 @end
