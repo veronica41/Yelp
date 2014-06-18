@@ -21,7 +21,7 @@
                             <constraint firstAttribute="width" constant="49" id="cYy-f9-NfM"/>
                         </constraints>
                     </switch>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xo3-hT-T8q">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xo3-hT-T8q">
                         <rect key="frame" x="16" y="8" width="223" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -34,6 +34,7 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="xIx-0y-LFd" secondAttribute="trailing" constant="16" id="1kg-2i-kwh"/>
                     <constraint firstItem="xo3-hT-T8q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Gbl-hK-Aj1"/>
+                    <constraint firstItem="xIx-0y-LFd" firstAttribute="leading" secondItem="xo3-hT-T8q" secondAttribute="trailing" constant="16" id="bbN-Ih-txG"/>
                     <constraint firstItem="xo3-hT-T8q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uro-i9-p4J"/>
                     <constraint firstItem="xIx-0y-LFd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="v7K-Hq-Vc3"/>
                 </constraints>

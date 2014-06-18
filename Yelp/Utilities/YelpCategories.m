@@ -24,8 +24,8 @@
         NSRegularExpression * regex = [NSRegularExpression regularExpressionWithPattern:expr options:0 error:&error];
         for (NSString * line in lines) {
             NSArray * results =  [regex matchesInString:line options:0 range:NSMakeRange(0, line.length)];
-            NSString * value = [line substringWithRange:[(NSTextCheckingResult *)results[0] range]];
-            NSString * key = [line substringWithRange:[(NSTextCheckingResult *)results[1] range]];
+            NSString * key = [line substringWithRange:[(NSTextCheckingResult *)results[0] range]];
+            NSString * value = [line substringWithRange:[(NSTextCheckingResult *)results[1] range]];
             
             [_categoriesDict setObject:value forKey:key];
         }

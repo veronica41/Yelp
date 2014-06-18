@@ -15,22 +15,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-5S-bQ1">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-5S-bQ1">
                     <rect key="frame" x="16" y="0.0" width="288" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <inset key="scrollIndicatorInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                     <color key="separatorColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="sectionIndexBackgroundColor" white="0.95999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="0.95999999999999996" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="HKm-5S-bQ1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AqJ-CZ-d8e"/>
-                <constraint firstAttribute="trailing" secondItem="HKm-5S-bQ1" secondAttribute="trailing" constant="16" id="dj7-97-WIt"/>
-                <constraint firstItem="HKm-5S-bQ1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="kkB-Az-k3V"/>
-                <constraint firstAttribute="bottom" secondItem="HKm-5S-bQ1" secondAttribute="bottom" id="x8x-dd-HmO"/>
+                <constraint firstAttribute="trailing" secondItem="HKm-5S-bQ1" secondAttribute="trailing" constant="16" id="79k-s6-0Mf"/>
+                <constraint firstItem="HKm-5S-bQ1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HkX-wP-fjz"/>
+                <constraint firstItem="HKm-5S-bQ1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="bMj-cJ-KQh"/>
+                <constraint firstAttribute="bottom" secondItem="HKm-5S-bQ1" secondAttribute="bottom" id="oGW-sU-jPq"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

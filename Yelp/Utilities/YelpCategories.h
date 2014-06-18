@@ -13,7 +13,7 @@
 @interface YelpCategories : NSObject
 
 /*
- key is the category_filter, value is the human readable category
+ key is the human readable category, value is the category_filter
  */
 @property (nonatomic, strong) NSMutableDictionary * categoriesDict;
 

@@ -20,6 +20,7 @@ static NSString * headerCellIdentifier = @"FiltersTableHeaderCell";
 static NSString * dropdownCellIdentifier = @"DropdownCell";
 static NSString * radiusCellIdentifier = @"RadiusCell";
 static NSString * dealsCellIdentifier = @"DealsCell";
+static NSString * categoriesCellIdentifier = @"CategoriesCell";
 
 static YelpCategories * _categoriesOptions;
 static NSArray * _sortByOptions;
@@ -39,6 +40,7 @@ typedef enum {
 @property (nonatomic) BOOL sortByCollapsing;
 
 @property (nonatomic) BOOL categoriesExpanded;
+@property (nonatomic, strong) NSMutableArray * selectedCategories;
 
 @end
 
@@ -71,6 +73,8 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [_tableView setBackgroundColor:[UIColor clearColor]];
+    _tableView.allowsMultipleSelectionDuringEditing = YES;
 
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -86,6 +90,8 @@ typedef enum {
 
     UINib *dealsCellNib = [UINib nibWithNibName:dealsCellIdentifier bundle:nil];
     [_tableView registerNib:dealsCellNib forCellReuseIdentifier:dealsCellIdentifier];
+
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:categoriesCellIdentifier];
 }
 
 #pragma mark - UITableViewDataSource
@@ -127,10 +133,17 @@ typedef enum {
     if (section == SortBySection) {
         if (_sortByExpanded || _sortByCollapsing) return _sortByOptions.count;
     }
+    if (section == CategoriesSection) {
+        if (!_categoriesExpanded) {
+            return 6;
+        }
+        return _categoriesOptions.categoriesDict.allKeys.count;
+    }
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == CategoriesSection) return 37;
     return 39;
 }
 
@@ -157,17 +170,26 @@ typedef enum {
     if (indexPath.section == DealsSection) {
         DealsCell * cell = [_tableView dequeueReusableCellWithIdentifier:dealsCellIdentifier];
         cell.dealsLabel.text = @"Offering a deal";
+        cell.dealsSwitch.on = _filterOption.dealsFilter;
+        [cell.dealsSwitch addTarget:self action:@selector(dealSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
         return cell;
     }
-    if (indexPath.section == CategoriesSection) {
-        
-    }
-    DropdownCell * cell = [_tableView dequeueReusableCellWithIdentifier:dropdownCellIdentifier];
-    cell.nameLabel.text = _sortByOptions[0];
-    return cell;
     
-
-    //return nil;
+    if (indexPath.section == CategoriesSection) {
+        UITableViewCell * cell = [_tableView dequeueReusableCellWithIdentifier:categoriesCellIdentifier];
+        [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
+        if (!_categoriesExpanded && indexPath.row == 5) {
+            cell.textLabel.text = @"See All";
+            [cell.textLabel setTextColor:[UIColor yelpRedColor]];
+            [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+        } else {
+            cell.textLabel.text = _categoriesOptions.categoriesDict.allKeys[indexPath.row];
+            [cell.textLabel setTextColor:[UIColor blackColor]];
+            [cell.textLabel setTextAlignment:NSTextAlignmentLeft];
+        }
+        return cell;
+    }
+    return nil;
 }
 
 #pragma mark - UITableViewDelegate
@@ -178,6 +200,13 @@ typedef enum {
             [self expandSortBySection];
         } else if (_sortByExpanded) {
             [self collapseSortBySectionWithRow:indexPath.row];
+        }
+    } else if (indexPath.section == CategoriesSection) {
+        if (!_categoriesExpanded && indexPath.row == 5) {
+            _categoriesExpanded = YES;
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:CategoriesSection] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            
         }
     }
 }
@@ -240,7 +269,8 @@ typedef enum {
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
-#pragma mark - helper
-
+- (void)dealSwitchValueChanged:(id)sender {
+    _filterOption.dealsFilter = ((UISwitch *)sender).on;
+}
 
 @end
