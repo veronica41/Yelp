@@ -35,7 +35,8 @@ typedef enum {
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) BOOL sortByExpanded;
-@property (nonatomic) BOOL radiusExpanded;
+@property (nonatomic) BOOL sortByCollapsing;
+
 @property (nonatomic) BOOL categoriesExpanded;
 
 @property (nonatomic, strong) NSMutableArray * sortByOptions;
@@ -58,7 +59,7 @@ typedef enum {
                                                                                 target:self
                                                                                 action:@selector(searchButtonHandler:)];
         _sortByExpanded = NO;
-        _radiusExpanded = NO;
+        _sortByCollapsing = NO;
         _categoriesExpanded = NO;
 
         _sortByOptions = [@[BEST_MATCHED, DISTANCE, HIGHEST_RATED] mutableCopy];
@@ -88,12 +89,6 @@ typedef enum {
     [_tableView registerNib:optionCellNib forCellReuseIdentifier:optionCellIdentifier];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -105,7 +100,11 @@ typedef enum {
     if(title == nil) return nil;
     FiltersTableHeaderCell * cell = [_tableView dequeueReusableCellWithIdentifier:headerCellIdentifier];
     cell.titleLabel.text = title;
-    return cell;
+
+    // a wrapper to solve header disappear and warning problem
+    UIView * headerView = [[UIView alloc] initWithFrame:[cell frame]];
+    [headerView addSubview:cell];
+    return headerView;
 }
 
 
@@ -123,7 +122,9 @@ typedef enum {
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == SortBySection && _sortByExpanded) return _sortByOptions.count;
+    if (section == SortBySection) {
+        if (_sortByExpanded || _sortByCollapsing) return _sortByOptions.count;
+    }
     return 1;
 }
 
@@ -133,13 +134,18 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == SortBySection) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0 && !_sortByExpanded) {
             DropdownCell * cell = [_tableView dequeueReusableCellWithIdentifier:dropdownCellIdentifier];
             cell.nameLabel.text = _sortByOptions[0];
             return cell;
         } else {
             OptionCell * cell = [_tableView dequeueReusableCellWithIdentifier:optionCellIdentifier];
             cell.nameLabel.text = _sortByOptions[indexPath.row];
+            if (indexPath.row == _filterOption.sort) {
+                cell.radioButton.image = [UIImage imageNamed:@"settings-radio-selected"];
+            } else {
+                cell.radioButton.image = [UIImage imageNamed:@"settings-radio-unselected"];
+            }
             return cell;
         }
     }
@@ -160,12 +166,60 @@ typedef enum {
 }
 
 #pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == SortBySection && indexPath.row == 0) {
-        _sortByExpanded = !_sortByExpanded;
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationTop];
+    if (indexPath.section == SortBySection) {
+        if (!_sortByExpanded && indexPath.row == 0) {
+            _sortByExpanded = !_sortByExpanded;
+            [self expandSortBySection];
+        } else if (_sortByExpanded) {
+            _sortByExpanded = !_sortByExpanded;
+            [self collapseSortBySectionWithRow:indexPath.row];
+        }
     }
 }
+
+// sort by section helpers
+
+- (void)expandSortBySection {
+    NSInteger rows = _sortByOptions.count;
+    NSMutableArray * indexPaths = [[NSMutableArray alloc] init];
+    for (int i = 1; i < rows; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [indexPaths insertObject:indexPath atIndex:0];
+    }
+    [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+    NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationFade];
+    
+
+}
+
+- (void)collapseSortBySectionWithRow:(NSInteger)row {
+    NSString * str = [_sortByOptions objectAtIndex:row];
+    [_sortByOptions removeObjectAtIndex:row];
+    [_sortByOptions insertObject:str atIndex:0];
+    _filterOption.sort = [self sortModeFromTitle:str];
+
+    _sortByCollapsing = YES;
+    NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:row inSection:0]];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
+    _sortByCollapsing = NO;
+
+    NSInteger rows = [_tableView numberOfRowsInSection:0];
+    NSMutableArray * indexPaths = [[NSMutableArray alloc] init];
+    for (int i = 1; i < rows; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [indexPaths insertObject:indexPath atIndex:0];
+    }
+    [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+    
+    reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
+    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationFade];
+    
+
+}
+
 
 #pragma mark - button handlers
 
