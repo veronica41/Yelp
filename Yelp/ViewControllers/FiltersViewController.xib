@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-5S-bQ1">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-5S-bQ1">
                     <rect key="frame" x="16" y="0.0" width="288" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -24,9 +24,9 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="HKm-5S-bQ1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="4eY-79-zon"/>
-                <constraint firstAttribute="trailing" secondItem="HKm-5S-bQ1" secondAttribute="trailing" constant="8" id="55k-M8-v68"/>
                 <constraint firstItem="HKm-5S-bQ1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AqJ-CZ-d8e"/>
+                <constraint firstAttribute="trailing" secondItem="HKm-5S-bQ1" secondAttribute="trailing" constant="16" id="dj7-97-WIt"/>
+                <constraint firstItem="HKm-5S-bQ1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="kkB-Az-k3V"/>
                 <constraint firstAttribute="bottom" secondItem="HKm-5S-bQ1" secondAttribute="bottom" id="x8x-dd-HmO"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

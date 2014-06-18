@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BDBOAuth1RequestOperationManager.h"
+#import "FilterOption.h"
 
 @interface YelpClient : BDBOAuth1RequestOperationManager
 
-- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term latitude:(double)latitude longitude:(double)longitude success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (AFHTTPRequestOperation *)searchWithFilterOption:(FilterOption *)filterOption success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

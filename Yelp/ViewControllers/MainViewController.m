@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "FilterOption.h"
 
 static NSString *cellIdentifier = @"YelpTableViewCell";
 
@@ -84,7 +85,10 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 
 // helper
 - (void)performSearchWithTerm:(NSString *)term {
-    [self.client searchWithTerm:term latitude:_currLocation.coordinate.latitude longitude:_currLocation.coordinate.longitude success:^(AFHTTPRequestOperation *operation, id response) {
+    FilterOption * options = [[FilterOption alloc] init];
+    options.term = term;
+
+    [self.client searchWithFilterOption:options success:^(AFHTTPRequestOperation *operation, id response) {
         _businesses = [Business businessesWithData:response];
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

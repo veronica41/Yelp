@@ -25,13 +25,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return self;
 }
 
-- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term latitude:(double)latitude longitude:(double)longitude success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (AFHTTPRequestOperation *)searchWithFilterOption:(FilterOption *)filterOption success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
-    NSString * location = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
-    NSLog(@"Location : %@", location);
-    NSDictionary *parameters = @{@"term": term, @"location" : @"San Francisco"};
-    
+    NSDictionary * parameters = [FilterOption dictionaryWithFilterOption:filterOption];
     return [self GET:@"search" parameters:parameters success:success failure:failure];
 }
 

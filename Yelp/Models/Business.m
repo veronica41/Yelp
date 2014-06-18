@@ -18,7 +18,11 @@
         business.imageURL = entry[@"image_url"];
         business.ratingImgURL = entry[@"rating_img_url"];
         business.reviewCount = [entry[@"review_count"] floatValue];
-        business.displayAddress = [entry[@"location"][@"display_address"] componentsJoinedByString:@", "];
+        NSMutableArray * address = [entry[@"location"][@"display_address"] mutableCopy];
+        if (address.count > 0) {
+            [address removeObjectAtIndex:address.count-1];
+        }
+        business.displayAddress = [address componentsJoinedByString:@", "];
         business.distance = [entry[@"distance"] floatValue];
         NSArray * categories = entry[@"categories"];
         business.categories = [[NSMutableArray alloc] init];
