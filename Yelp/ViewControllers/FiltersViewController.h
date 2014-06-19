@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FilterOption.h"
+#import "RadiusCell.h"
 
 @protocol FiltersViewControllerDelegate <NSObject>
 
@@ -15,7 +16,7 @@
 
 @end
 
-@interface FiltersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface FiltersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, RadiusCellDelegate>
 
 @property (nonatomic, weak) id<FiltersViewControllerDelegate> delegate;
 @property (nonatomic, strong) FilterOption * filterOption;

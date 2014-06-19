@@ -32,17 +32,11 @@
 		96667E201950D2B100F2C95A /* YelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E1E1950D2B100F2C95A /* YelpTableViewCell.xib */; };
 		96667E24195110B100F2C95A /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E22195110B100F2C95A /* FiltersViewController.m */; };
 		96667E25195110B100F2C95A /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E23195110B100F2C95A /* FiltersViewController.xib */; };
-		96667E3D19511DC700F2C95A /* FiltersTableHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E3B19511DC700F2C95A /* FiltersTableHeaderCell.m */; };
-		96667E3E19511DC700F2C95A /* FiltersTableHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E3C19511DC700F2C95A /* FiltersTableHeaderCell.xib */; };
-		96667E421951247F00F2C95A /* DropdownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E401951247F00F2C95A /* DropdownCell.m */; };
-		96667E431951247F00F2C95A /* DropdownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E411951247F00F2C95A /* DropdownCell.xib */; };
 		96667E4619512CD000F2C95A /* FilterOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E4519512CD000F2C95A /* FilterOption.m */; };
 		96667E491951363900F2C95A /* YelpCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E481951363900F2C95A /* YelpCategories.m */; };
 		96667E4B1951365200F2C95A /* categories.txt in Resources */ = {isa = PBXBuildFile; fileRef = 96667E4A1951365200F2C95A /* categories.txt */; };
 		96667E64195186AF00F2C95A /* RadiusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E62195186AF00F2C95A /* RadiusCell.m */; };
 		96667E65195186AF00F2C95A /* RadiusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E63195186AF00F2C95A /* RadiusCell.xib */; };
-		96667E6919518B9E00F2C95A /* DealsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96667E6719518B9E00F2C95A /* DealsCell.m */; };
-		96667E6A19518B9E00F2C95A /* DealsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96667E6819518B9E00F2C95A /* DealsCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,12 +86,6 @@
 		96667E21195110B100F2C95A /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiltersViewController.h; path = ViewControllers/FiltersViewController.h; sourceTree = "<group>"; };
 		96667E22195110B100F2C95A /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FiltersViewController.m; path = ViewControllers/FiltersViewController.m; sourceTree = "<group>"; };
 		96667E23195110B100F2C95A /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FiltersViewController.xib; path = ViewControllers/FiltersViewController.xib; sourceTree = "<group>"; };
-		96667E3A19511DC700F2C95A /* FiltersTableHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiltersTableHeaderCell.h; path = Views/FiltersTableHeaderCell.h; sourceTree = "<group>"; };
-		96667E3B19511DC700F2C95A /* FiltersTableHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FiltersTableHeaderCell.m; path = Views/FiltersTableHeaderCell.m; sourceTree = "<group>"; };
-		96667E3C19511DC700F2C95A /* FiltersTableHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FiltersTableHeaderCell.xib; path = Views/FiltersTableHeaderCell.xib; sourceTree = "<group>"; };
-		96667E3F1951247F00F2C95A /* DropdownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropdownCell.h; path = Views/DropdownCell.h; sourceTree = "<group>"; };
-		96667E401951247F00F2C95A /* DropdownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropdownCell.m; path = Views/DropdownCell.m; sourceTree = "<group>"; };
-		96667E411951247F00F2C95A /* DropdownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropdownCell.xib; path = Views/DropdownCell.xib; sourceTree = "<group>"; };
 		96667E4419512CD000F2C95A /* FilterOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterOption.h; path = Models/FilterOption.h; sourceTree = "<group>"; };
 		96667E4519512CD000F2C95A /* FilterOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOption.m; path = Models/FilterOption.m; sourceTree = "<group>"; };
 		96667E471951363900F2C95A /* YelpCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YelpCategories.h; path = Utilities/YelpCategories.h; sourceTree = "<group>"; };
@@ -106,9 +94,6 @@
 		96667E61195186AF00F2C95A /* RadiusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadiusCell.h; path = Views/RadiusCell.h; sourceTree = "<group>"; };
 		96667E62195186AF00F2C95A /* RadiusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RadiusCell.m; path = Views/RadiusCell.m; sourceTree = "<group>"; };
 		96667E63195186AF00F2C95A /* RadiusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RadiusCell.xib; path = Views/RadiusCell.xib; sourceTree = "<group>"; };
-		96667E6619518B9E00F2C95A /* DealsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealsCell.h; path = Views/DealsCell.h; sourceTree = "<group>"; };
-		96667E6719518B9E00F2C95A /* DealsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealsCell.m; path = Views/DealsCell.m; sourceTree = "<group>"; };
-		96667E6819518B9E00F2C95A /* DealsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DealsCell.xib; path = Views/DealsCell.xib; sourceTree = "<group>"; };
 		9DEC6D18C14F46F8AF2EA320 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -285,18 +270,9 @@
 				96667E1C1950D2B100F2C95A /* YelpTableViewCell.h */,
 				96667E1D1950D2B100F2C95A /* YelpTableViewCell.m */,
 				96667E1E1950D2B100F2C95A /* YelpTableViewCell.xib */,
-				96667E3A19511DC700F2C95A /* FiltersTableHeaderCell.h */,
-				96667E3B19511DC700F2C95A /* FiltersTableHeaderCell.m */,
-				96667E3C19511DC700F2C95A /* FiltersTableHeaderCell.xib */,
-				96667E3F1951247F00F2C95A /* DropdownCell.h */,
-				96667E401951247F00F2C95A /* DropdownCell.m */,
-				96667E411951247F00F2C95A /* DropdownCell.xib */,
 				96667E61195186AF00F2C95A /* RadiusCell.h */,
 				96667E62195186AF00F2C95A /* RadiusCell.m */,
 				96667E63195186AF00F2C95A /* RadiusCell.xib */,
-				96667E6619518B9E00F2C95A /* DealsCell.h */,
-				96667E6719518B9E00F2C95A /* DealsCell.m */,
-				96667E6819518B9E00F2C95A /* DealsCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -384,12 +360,9 @@
 				96667DCD195016E300F2C95A /* filter.png in Resources */,
 				96667E4B1951365200F2C95A /* categories.txt in Resources */,
 				96667E1B1950CD5500F2C95A /* MainViewController.xib in Resources */,
-				96667E3E19511DC700F2C95A /* FiltersTableHeaderCell.xib in Resources */,
-				96667E6A19518B9E00F2C95A /* DealsCell.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				42FD6C5D18DC286B000BF2B9 /* Images.xcassets in Resources */,
 				96667E65195186AF00F2C95A /* RadiusCell.xib in Resources */,
-				96667E431951247F00F2C95A /* DropdownCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,8 +416,6 @@
 			files = (
 				96667DFE19504E8600F2C95A /* YelpClient.m in Sources */,
 				96667E64195186AF00F2C95A /* RadiusCell.m in Sources */,
-				96667E421951247F00F2C95A /* DropdownCell.m in Sources */,
-				96667E3D19511DC700F2C95A /* FiltersTableHeaderCell.m in Sources */,
 				96667DFD19504E8600F2C95A /* YelpImageHelper.m in Sources */,
 				96667E4619512CD000F2C95A /* FilterOption.m in Sources */,
 				96667E491951363900F2C95A /* YelpCategories.m in Sources */,
@@ -454,7 +425,6 @@
 				96667DF119502CCD00F2C95A /* Business.m in Sources */,
 				96667E24195110B100F2C95A /* FiltersViewController.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
-				96667E6919518B9E00F2C95A /* DealsCell.m in Sources */,
 				96667DE61950204D00F2C95A /* UIColor+Yelp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,14 +15,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    // set navigation bar style
+    [[UINavigationBar appearance] setBarTintColor:[UIColor yelpRedColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     MainViewController * mainViewController = [[MainViewController alloc] init];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     self.window.rootViewController = navController;
 
-    [[UINavigationBar appearance] setBackgroundColor:[UIColor yelpRedColor]];
-    [[UINavigationBar appearance] setTintColor:[UIColor yelpRedColor]];
-    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

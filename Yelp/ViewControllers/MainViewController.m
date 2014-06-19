@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "FilterOption.h"
+#import <MBProgressHUD.h>
 
 
 static NSString *cellIdentifier = @"YelpTableViewCell";
@@ -52,27 +53,24 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 {
     [super viewDidLoad];
 
+    // setup table view
     UINib *tableCellNib = [UINib nibWithNibName:cellIdentifier bundle:nil];
-    _prototypeCell = [tableCellNib instantiateWithOwner:self options:nil][0];
     [_tableView registerNib:tableCellNib forCellReuseIdentifier:cellIdentifier];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    
+    _prototypeCell = [_tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    // setup search bar and navigation bar
     _searchBar = [[UISearchBar alloc] init];
     _searchBar.delegate = self;
-    [_searchBar sizeToFit];
+    _searchBar.text= @"Thai";
+    [self performSearchWithTerm:@"Thai"];
+
     self.navigationItem.titleView = _searchBar;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(filterButtonHandler:)];
-    [self performSearchWithTerm:@"Thai"];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -88,10 +86,14 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
     FilterOption * options = [[FilterOption alloc] init];
     options.term = term;
 
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self.client searchWithFilterOption:options success:^(AFHTTPRequestOperation *operation, id response) {
         _businesses = [Business businessesWithData:response];
         [_tableView reloadData];
+
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[error localizedDescription]
                                                        message:[error localizedRecoverySuggestion]
                                                       delegate:self
@@ -112,42 +114,26 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 
 #pragma mark - UITableViewDataSource
 
-- (YelpTableViewCell *)prototypeCell {
-    if (!_prototypeCell) {
-        _prototypeCell = [_tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    }
-    return _prototypeCell;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_businesses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YelpTableViewCell * cell = [_tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    Business * business = [_businesses objectAtIndex:indexPath.row];
-    [cell setBusiness:business];
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
+    cell.business = [_businesses objectAtIndex:indexPath.row];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 95;
+    return 99;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Business * business = [_businesses objectAtIndex:indexPath.row];
-    YelpTableViewCell * prototypeCell = [self prototypeCell];
-    [prototypeCell setBusiness:business];
-    [prototypeCell setNeedsUpdateConstraints];
-    [prototypeCell updateConstraintsIfNeeded];
-    prototypeCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(prototypeCell.bounds));
-    [prototypeCell setNeedsLayout];
-    [prototypeCell layoutIfNeeded];
-    CGSize size = [prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    _prototypeCell.business = [_businesses objectAtIndex:indexPath.row];
+    [_prototypeCell layoutSubviews];
+    CGSize size = [_prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     return size.height+1;
 }
 
@@ -172,8 +158,10 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 
 - (void)filterButtonHandler:(id)sender {
     FiltersViewController *filtersController = [[FiltersViewController alloc] init];
+    filtersController.filterOption.term = _searchBar.text;
     filtersController.delegate = self;
     [[self navigationController] pushViewController:filtersController animated:YES];
+    [self.navigationController.view clipsToBounds];
 }
 
 @end

@@ -8,21 +8,16 @@
 
 #import "FiltersViewController.h"
 #import "UIColor+Yelp.h"
-#import "FiltersTableHeaderCell.h"
-#import "DropdownCell.h"
 #import "YelpCategories.h"
 #import "RadiusCell.h"
-#import "DealsCell.h"
 
-#define CATEOGIES_LIMITS 10
+#define INIT_CATEGORIES_TO_SHOW 4
 
-static NSString * headerCellIdentifier = @"FiltersTableHeaderCell";
-static NSString * dropdownCellIdentifier = @"DropdownCell";
+static NSString * filtersCellIdentifier = @"FiltersCell";
 static NSString * radiusCellIdentifier = @"RadiusCell";
-static NSString * dealsCellIdentifier = @"DealsCell";
-static NSString * categoriesCellIdentifier = @"CategoriesCell";
 
-static YelpCategories * _categoriesOptions;
+static NSArray * _categoriesOptions;
+static NSDictionary * _categoriesDict;
 static NSArray * _sortByOptions;
 
 typedef enum {
@@ -35,12 +30,10 @@ typedef enum {
 @interface FiltersViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UISwitch *dealsSwitch;
 
 @property (nonatomic) BOOL sortByExpanded;
-@property (nonatomic) BOOL sortByCollapsing;
-
 @property (nonatomic) BOOL categoriesExpanded;
-@property (nonatomic, strong) NSMutableArray * selectedCategories;
 
 @end
 
@@ -48,7 +41,8 @@ typedef enum {
 @implementation FiltersViewController
 
 + (void)initialize {
-    _categoriesOptions = [[YelpCategories alloc] init];
+    _categoriesOptions = [YelpCategories categories];
+    _categoriesDict = [YelpCategories categoriesDict];
     _sortByOptions = @[BEST_MATCHED, DISTANCE, HIGHEST_RATED];
 }
 
@@ -56,16 +50,8 @@ typedef enum {
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonHandler:)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search"
-                                                                                 style:UIBarButtonItemStylePlain
-                                                                                target:self
-                                                                                action:@selector(searchButtonHandler:)];
         _filterOption = [[FilterOption alloc] init];
- 
         _sortByExpanded = NO;
-        _sortByExpanded = NO;
-
         _categoriesExpanded = NO;
     }
     return self;
@@ -73,25 +59,31 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_tableView setBackgroundColor:[UIColor clearColor]];
-    _tableView.allowsMultipleSelectionDuringEditing = YES;
+    // setup navigation bar
+    self.title = @"Filters";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                          target:self
+                                                                                          action:@selector(cancelButtonHandler:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(searchButtonHandler:)];
 
+    // setup switch
+    _dealsSwitch = [[UISwitch alloc] init];
+    [_dealsSwitch addTarget:self
+                     action:@selector(dealSwitchValueChanged:)
+           forControlEvents:UIControlEventValueChanged];
+    _dealsSwitch.on = _filterOption.dealsFilter;
+
+    [_tableView setBackgroundColor:[UIColor clearColor]];
+    [_tableView setRowHeight:39];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:filtersCellIdentifier];
 
-    UINib *headerCellNib = [UINib nibWithNibName:headerCellIdentifier bundle:nil];
-    [_tableView registerNib:headerCellNib forCellReuseIdentifier:headerCellIdentifier];
-
-    UINib *dropdownCellNib = [UINib nibWithNibName:dropdownCellIdentifier bundle:nil];
-    [_tableView registerNib:dropdownCellNib forCellReuseIdentifier:dropdownCellIdentifier];
-
-    UINib *radiusCellNib = [UINib nibWithNibName:radiusCellIdentifier bundle:nil];
-    [_tableView registerNib:radiusCellNib forCellReuseIdentifier:radiusCellIdentifier];
-
-    UINib *dealsCellNib = [UINib nibWithNibName:dealsCellIdentifier bundle:nil];
-    [_tableView registerNib:dealsCellNib forCellReuseIdentifier:dealsCellIdentifier];
-
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:categoriesCellIdentifier];
+    UINib *tableCellNib = [UINib nibWithNibName:radiusCellIdentifier bundle:nil];
+    [_tableView registerNib:tableCellNib forCellReuseIdentifier:radiusCellIdentifier];
 }
 
 #pragma mark - UITableViewDataSource
@@ -100,25 +92,25 @@ typedef enum {
     return 4;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-    NSString * title = [self tableView:tableView titleForHeaderInSection:section];
-    if(title == nil) return nil;
-    FiltersTableHeaderCell * cell = [_tableView dequeueReusableCellWithIdentifier:headerCellIdentifier];
-    cell.titleLabel.text = title;
-
-    // a wrapper to solve header disappear and warning problem
-    UIView * headerView = [[UIView alloc] initWithFrame:[cell frame]];
-    [headerView addSubview:cell];
-    return headerView;
-}
-
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == SortBySection) return @"Sort";
-    if (section == RadiusSection) return @"Radius";
-    if (section == DealsSection) return @"Deals";
-    if (section == CategoriesSection) return @"Categories";
+    switch (section) {
+        case SortBySection:
+            return @"Sort";
+        case RadiusSection:
+            return @"Radius";
+        case DealsSection:
+            return @"Deals";
+        case CategoriesSection:
+            return @"Categories";
+    }
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    // I don't like all UpperCase string
+    UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView *) view;
+    tableViewHeaderFooterView.textLabel.text = [tableViewHeaderFooterView.textLabel.text capitalizedString];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -130,87 +122,113 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == SortBySection) {
-        if (_sortByExpanded || _sortByCollapsing) return _sortByOptions.count;
-    }
-    if (section == CategoriesSection) {
-        if (!_categoriesExpanded) {
-            return 5;
-        }
-        return _categoriesOptions.categoriesDict.allKeys.count;
+    switch (section) {
+        case SortBySection:
+            if (_sortByExpanded) return _sortByOptions.count;
+            return 1;
+        case CategoriesSection:
+            if (!_categoriesExpanded) {
+                return INIT_CATEGORIES_TO_SHOW+1;
+            } else {
+                return _categoriesOptions.count;
+            }
+        case DealsSection:
+        case RadiusSection:
+            return 1;
     }
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == CategoriesSection) return 39;
-    return 39;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == SortBySection) {
-        DropdownCell * cell = [_tableView dequeueReusableCellWithIdentifier:dropdownCellIdentifier];
-        if (indexPath.row == 0 && !_sortByExpanded) {
-            cell.nameLabel.text = _sortByOptions[_filterOption.sortFilter];
-            cell.dropDownButton.image = [UIImage imageNamed:@"arrow_collapse"];
-        } else {
-            cell.nameLabel.text = _sortByOptions[indexPath.row];
-            if (_filterOption.sortFilter == indexPath.row) {
-                cell.dropDownButton.image = [UIImage imageNamed:@"settings-radio-selected"];
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+
+    switch (section) {
+        case SortBySection:
+        {
+            UITableViewCell * cell = [self standardCell];
+            UIImageView * accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 21, 21)];
+            if (!_sortByExpanded) {
+                NSAssert(row == 0, @"only 1 row when collapsed");
+                cell.textLabel.text = _sortByOptions[_filterOption.sortFilter];
+                accessoryView.image = [UIImage imageNamed:@"arrow_collapse"];
             } else {
-                cell.dropDownButton.image = [UIImage imageNamed:@"settings-radio-unselected"];
+                cell.textLabel.text = _sortByOptions[row];
+                if (_filterOption.sortFilter == row) {
+                   accessoryView.image = [UIImage imageNamed:@"settings-radio-selected"];
+                } else {
+                   accessoryView.image = [UIImage imageNamed:@"settings-radio-unselected"];
+                }
             }
+            cell.accessoryView = accessoryView;
+            return cell;
         }
-        return cell;
-    }
-    if (indexPath.section == RadiusSection) {
-        RadiusCell * cell = [_tableView dequeueReusableCellWithIdentifier:radiusCellIdentifier];
-        return cell;
-    }
-    if (indexPath.section == DealsSection) {
-        DealsCell * cell = [_tableView dequeueReusableCellWithIdentifier:dealsCellIdentifier];
-        cell.dealsLabel.text = @"Offering a deal";
-        cell.dealsSwitch.on = _filterOption.dealsFilter;
-        [cell.dealsSwitch addTarget:self action:@selector(dealSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
-        return cell;
-    }
-    
-    if (indexPath.section == CategoriesSection) {
-        UITableViewCell * cell = [_tableView dequeueReusableCellWithIdentifier:categoriesCellIdentifier];
-        [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
-        if (!_categoriesExpanded && indexPath.row == 4) {
-            cell.textLabel.text = @"See All";
-            [cell.textLabel setTextColor:[UIColor yelpRedColor]];
-            [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
-        } else {
-            cell.textLabel.text = _categoriesOptions.categoriesDict.allKeys[indexPath.row];
-            [cell.textLabel setTextColor:[UIColor blackColor]];
-            [cell.textLabel setTextAlignment:NSTextAlignmentLeft];
+        case RadiusSection:
+        {
+            RadiusCell * radiusCell = [_tableView dequeueReusableCellWithIdentifier:radiusCellIdentifier];
+            radiusCell.radius = _filterOption.radiusFilter;
+            return radiusCell;
         }
-        if ([_filterOption.categories containsObject:[NSNumber numberWithInteger:indexPath.row]]) {
-            [cell setSelected:YES];
+        case DealsSection:
+        {
+            UITableViewCell * cell = [self standardCell];
+            cell.textLabel.text = @"Offering a deal";
+            _dealsSwitch.on = _filterOption.dealsFilter;
+            cell.accessoryView = _dealsSwitch;
+            return cell;
         }
-        return cell;
+        case CategoriesSection:
+        {
+            UITableViewCell * cell = [self standardCell];
+            if (!_categoriesExpanded && row == INIT_CATEGORIES_TO_SHOW) {
+                cell.textLabel.text = @"See All";
+                [cell.textLabel setTextColor:[UIColor yelpRedColor]];
+                [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+            } else {
+                cell.textLabel.text = _categoriesOptions[row];
+            }
+            return cell;
+        }
     }
     return nil;
+}
+
+// helper
+- (UITableViewCell *)standardCell {
+    UITableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:filtersCellIdentifier];
+    [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
+    [cell.textLabel setTextColor:[UIColor blackColor]];
+    [cell.textLabel setTextAlignment:NSTextAlignmentLeft];
+    cell.accessoryView = nil;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == SortBySection) {
-        if (!_sortByExpanded) {
-            [self expandSortBySection];
-        } else if (_sortByExpanded) {
-            [self collapseSortBySectionWithRow:indexPath.row];
-        }
-    } else if (indexPath.section == CategoriesSection) {
-        if (!_categoriesExpanded && indexPath.row == 4) {
-            _categoriesExpanded = YES;
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:CategoriesSection] withRowAnimation:UITableViewRowAnimationFade];
-        } else {
-            [_filterOption.categories insertObject:[NSNumber numberWithInteger:indexPath.row] atIndex:0];
-        }
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+
+    switch (section) {
+        case SortBySection:
+            if (!_sortByExpanded) {
+                [self expandSortBySection];
+            } else {
+                [self collapseSortBySectionWithRow:row];
+            }
+            break;
+        case CategoriesSection:
+            if (!_categoriesExpanded && indexPath.row == INIT_CATEGORIES_TO_SHOW) {
+                _categoriesExpanded = YES;
+               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:CategoriesSection] withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+               [self toggleCategorySelectionAtRow:row];
+            }
+            break;
+        case DealsSection:
+        case RadiusSection:
+            break;
     }
 }
 
@@ -218,16 +236,7 @@ typedef enum {
 
 - (void)expandSortBySection {
     _sortByExpanded = YES;
-
-    NSInteger rows = _sortByOptions.count;
-    NSMutableArray * indexPaths = [[NSMutableArray alloc] init];
-    for (int i = 1; i < rows; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        [indexPaths insertObject:indexPath atIndex:0];
-    }
-    [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
-    NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
-    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationBottom];
+    [self reloadSortBySection];
 }
 
 - (void)collapseSortBySectionWithRow:(NSInteger)row {
@@ -241,25 +250,33 @@ typedef enum {
 
     _sortByExpanded = NO;
     // introduce delay
-    [self performSelector:@selector(removeRows) withObject:self afterDelay:0.5 inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+    [self performSelector:@selector(reloadSortBySection) withObject:self afterDelay:0.5 inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
 }
 
-// helper for collapse
-- (void)removeRows {
-    _sortByCollapsing = YES;
-    NSArray * reloadPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];
-    [_tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
-    _sortByCollapsing = NO;
+// helper
+- (void)reloadSortBySection {
+   [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:SortBySection] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 
-    NSInteger rows = [_tableView numberOfRowsInSection:0];
-    NSMutableArray * indexPaths = [[NSMutableArray alloc] init];
-    for (int i = 1; i < rows; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        [indexPaths insertObject:indexPath atIndex:0];
+- (void)toggleCategorySelectionAtRow:(NSInteger)row {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:CategoriesSection];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    NSString * category = [NSString stringWithFormat:@"%ld", (long)row];
+    if ([_filterOption.categories containsObject:category]) {
+        [_filterOption.categories removeObject:category];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        [_filterOption.categories addObject:category];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
 }
 
+#pragma mark - RadiusCellDelegate
+
+- (void)sliderValueChanged:(int)value {
+    _filterOption.radiusFilter = value;
+}
 
 #pragma mark - button handlers
 

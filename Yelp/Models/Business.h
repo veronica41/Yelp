@@ -19,5 +19,8 @@
 @property (nonatomic, strong) NSMutableArray * categories;
 
 + (NSArray *)businessesWithData:(id)data;
+- (NSString *)distanceString;
+- (NSString *)reviewCountString;
+- (NSString *)categoriesString;
 
 @end

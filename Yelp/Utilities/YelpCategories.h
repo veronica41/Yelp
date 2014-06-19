@@ -15,6 +15,7 @@
 /*
  key is the human readable category, value is the category_filter
  */
-@property (nonatomic, strong) NSMutableDictionary * categoriesDict;
++(NSDictionary *)categoriesDict;
++(NSArray *)categories;
 
 @end

@@ -24,11 +24,12 @@ typedef enum {
 @property (nonatomic, strong) NSString * location;
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
-@property (nonatomic) double radiusFilter;
+@property (nonatomic) int radiusFilter;
 @property (nonatomic) sortMode sortFilter;
 @property (nonatomic) BOOL dealsFilter;
 @property (nonatomic, strong) NSMutableArray * categories;
 
 + (NSDictionary *)dictionaryWithFilterOption:(FilterOption *)filterOption;
+- (NSString *)categoryFilterString;
 
 @end

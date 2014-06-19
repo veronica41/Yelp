@@ -34,21 +34,11 @@
     [YelpImageHelper setImageWithURL:business.ratingImgURL placeHolderImage:nil forView:_ratingsView];
 
     [_nameLabel setText:business.name];
-    [_nameLabel setPreferredMaxLayoutWidth:162.0];
-
-    [_distanceLabel setText:[NSString stringWithFormat:@"%.2f mi", business.distance]];
-
-    NSString * review = (business.reviewCount > 1) ? @"Reviews" : @"Review";
-    [_reviewsCountLabel setText:[NSString stringWithFormat:@"%ld %@", (long)business.reviewCount, review]];
-
+    [_distanceLabel setText:business.distanceString];
+    [_reviewsCountLabel setText:business.reviewCountString];
     [_addressLabel setText:business.displayAddress];
-    [_addressLabel setPreferredMaxLayoutWidth:218.0];
-
-    [_categoriesLabel setText:[business.categories componentsJoinedByString:@", "]];
-    [_categoriesLabel setPreferredMaxLayoutWidth:218.0];
+    [_categoriesLabel setText:business.categoriesString];
 }
-
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

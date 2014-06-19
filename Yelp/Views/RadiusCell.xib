@@ -14,18 +14,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x1k-Av-9pt">
-                        <rect key="frame" x="14" y="4" width="232" height="31"/>
+                        <rect key="frame" x="14" y="4" width="214" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Jea-ZP-HXe"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Ni5-MY-IHp"/>
                         </constraints>
+                        <connections>
+                            <action selector="sliderValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="0Gx-tG-wS6"/>
+                        </connections>
                     </slider>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccl-Kk-zVE">
-                        <rect key="frame" x="260" y="8" width="44" height="21"/>
+                        <rect key="frame" x="234" y="8" width="70" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="44" id="Mnh-DP-b4G"/>
+                            <constraint firstAttribute="width" constant="70" id="Mnh-DP-b4G"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                         <nil key="highlightedColor"/>
@@ -36,7 +39,7 @@
                     <constraint firstItem="ccl-Kk-zVE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="LxH-Jb-1od"/>
                     <constraint firstItem="x1k-Av-9pt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Ozu-v7-mTL"/>
                     <constraint firstItem="x1k-Av-9pt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Xcw-US-2k0"/>
-                    <constraint firstItem="ccl-Kk-zVE" firstAttribute="leading" secondItem="x1k-Av-9pt" secondAttribute="trailing" constant="16" id="dRp-19-Vd4"/>
+                    <constraint firstItem="ccl-Kk-zVE" firstAttribute="leading" secondItem="x1k-Av-9pt" secondAttribute="trailing" constant="8" id="dRp-19-Vd4"/>
                     <constraint firstAttribute="bottom" secondItem="ccl-Kk-zVE" secondAttribute="bottom" constant="9" id="y0t-Qt-OHM"/>
                 </constraints>
             </tableViewCellContentView>

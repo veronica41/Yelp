@@ -6,19 +6,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="KGk-i7-Jjw" customClass="YelpTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="YelpTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jw6-6a-teT">
-                        <rect key="frame" x="8" y="12" width="74" height="74"/>
+                        <rect key="frame" x="8" y="8" width="78" height="83"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="74" id="dx5-9N-9y7"/>
-                            <constraint firstAttribute="height" constant="74" id="uvV-dX-ZOI"/>
+                            <constraint firstAttribute="width" constant="78" id="2SG-c6-uPD"/>
+                            <constraint firstAttribute="height" constant="83" id="y3C-AD-NJD"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="162" translatesAutoresizingMaskIntoConstraints="NO" id="9ZV-jZ-DBK">
@@ -32,22 +32,24 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJa-Bo-YZP">
-                        <rect key="frame" x="264" y="8" width="48" height="18"/>
+                        <rect key="frame" x="264" y="8" width="48" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VrX-kk-Hr6">
-                        <rect key="frame" x="94" y="33" width="80" height="18"/>
+                        <rect key="frame" x="94" y="36" width="80" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="XcX-ZX-cqb"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="F69-uM-3K2"/>
+                            <constraint firstAttribute="height" constant="15" id="XcX-ZX-cqb"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="uD1-LZ-p31"/>
                             <constraint firstAttribute="width" constant="80" id="xIX-Sk-SF9"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Glj-uL-fdP">
-                        <rect key="frame" x="182" y="33" width="130" height="15"/>
+                        <rect key="frame" x="182" y="36" width="130" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="130" id="ctC-oe-sVT"/>
@@ -77,26 +79,30 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="leading" secondItem="9ZV-jZ-DBK" secondAttribute="trailing" constant="8" id="3he-9O-Gix"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DHZ-x9-80r" secondAttribute="bottom" constant="4" id="5BS-II-oT8"/>
-                    <constraint firstItem="Glj-uL-fdP" firstAttribute="top" secondItem="DJa-Bo-YZP" secondAttribute="bottom" constant="7" id="AgI-wm-c3P"/>
-                    <constraint firstItem="9ZV-jZ-DBK" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="12" id="Bo3-uP-ign"/>
-                    <constraint firstItem="Jw6-6a-teT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="FSD-6a-R7R"/>
-                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Fxo-je-rig"/>
-                    <constraint firstAttribute="bottom" secondItem="DHZ-x9-80r" secondAttribute="bottom" constant="4" id="GbH-0U-54z"/>
-                    <constraint firstItem="eEL-rY-gVr" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="12" id="H7A-jp-qWt"/>
-                    <constraint firstItem="VrX-kk-Hr6" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="12" id="Jwj-JT-RXX"/>
-                    <constraint firstItem="DHZ-x9-80r" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="12" id="NIT-o2-Qsb"/>
-                    <constraint firstItem="DHZ-x9-80r" firstAttribute="top" secondItem="eEL-rY-gVr" secondAttribute="bottom" constant="4" id="OHS-Lh-O9U"/>
-                    <constraint firstItem="Glj-uL-fdP" firstAttribute="leading" secondItem="VrX-kk-Hr6" secondAttribute="trailing" constant="8" id="aRU-Ja-z5S"/>
-                    <constraint firstItem="Glj-uL-fdP" firstAttribute="top" secondItem="9ZV-jZ-DBK" secondAttribute="bottom" constant="4" id="bT6-nD-QV3"/>
-                    <constraint firstItem="9ZV-jZ-DBK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="bwO-lI-smH"/>
-                    <constraint firstItem="VrX-kk-Hr6" firstAttribute="top" secondItem="9ZV-jZ-DBK" secondAttribute="bottom" constant="4" id="fUO-7w-vP0"/>
-                    <constraint firstItem="Jw6-6a-teT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="gX7-Ul-Ive"/>
-                    <constraint firstAttribute="trailing" secondItem="DJa-Bo-YZP" secondAttribute="trailing" constant="8" id="hn1-2L-Mfr"/>
-                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="trailing" secondItem="Glj-uL-fdP" secondAttribute="trailing" id="kTo-BO-cQ9"/>
-                    <constraint firstItem="eEL-rY-gVr" firstAttribute="top" secondItem="VrX-kk-Hr6" secondAttribute="bottom" constant="4" id="nOc-Vy-rFL"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DJa-Bo-YZP" secondAttribute="trailing" constant="4" id="wq0-VK-F5B"/>
+                    <constraint firstAttribute="trailing" secondItem="eEL-rY-gVr" secondAttribute="trailing" constant="8" id="0g9-lP-siF"/>
+                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="1sD-sy-son"/>
+                    <constraint firstItem="DHZ-x9-80r" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="8" id="7Ez-yC-yG6"/>
+                    <constraint firstItem="9ZV-jZ-DBK" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="8" id="7F6-Gb-XMX"/>
+                    <constraint firstItem="Glj-uL-fdP" firstAttribute="top" secondItem="DJa-Bo-YZP" secondAttribute="bottom" constant="7" id="CJi-2l-gZT"/>
+                    <constraint firstItem="Jw6-6a-teT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="CgJ-xT-Jj3"/>
+                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="leading" secondItem="9ZV-jZ-DBK" secondAttribute="trailing" constant="8" id="JGC-Bs-Knf"/>
+                    <constraint firstItem="Glj-uL-fdP" firstAttribute="top" secondItem="DJa-Bo-YZP" secondAttribute="bottom" constant="7" id="ONz-vW-meQ"/>
+                    <constraint firstItem="9ZV-jZ-DBK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OWz-5Z-bLn"/>
+                    <constraint firstAttribute="trailing" secondItem="Glj-uL-fdP" secondAttribute="trailing" constant="8" id="Ps7-jP-y08"/>
+                    <constraint firstItem="Glj-uL-fdP" firstAttribute="leading" secondItem="VrX-kk-Hr6" secondAttribute="trailing" constant="8" id="Ufd-2b-vs1"/>
+                    <constraint firstItem="VrX-kk-Hr6" firstAttribute="top" secondItem="9ZV-jZ-DBK" secondAttribute="bottom" constant="7" id="ayd-ax-3v2"/>
+                    <constraint firstItem="Glj-uL-fdP" firstAttribute="top" secondItem="9ZV-jZ-DBK" secondAttribute="bottom" constant="7" id="bF9-4l-7nG"/>
+                    <constraint firstItem="eEL-rY-gVr" firstAttribute="top" secondItem="Glj-uL-fdP" secondAttribute="bottom" constant="4" id="fg0-LB-j2Z"/>
+                    <constraint firstItem="Jw6-6a-teT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="hZg-Dz-D3r"/>
+                    <constraint firstItem="eEL-rY-gVr" firstAttribute="top" secondItem="Glj-uL-fdP" secondAttribute="bottom" constant="4" id="kC0-RH-HDa"/>
+                    <constraint firstItem="eEL-rY-gVr" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="8" id="kQs-Ey-zia"/>
+                    <constraint firstAttribute="bottom" secondItem="DHZ-x9-80r" secondAttribute="bottom" constant="8" id="lPw-h4-1nh"/>
+                    <constraint firstItem="VrX-kk-Hr6" firstAttribute="leading" secondItem="Jw6-6a-teT" secondAttribute="trailing" constant="8" id="nKl-kc-976"/>
+                    <constraint firstItem="DJa-Bo-YZP" firstAttribute="leading" secondItem="9ZV-jZ-DBK" secondAttribute="trailing" constant="8" id="ou5-gH-59K"/>
+                    <constraint firstAttribute="trailing" secondItem="DHZ-x9-80r" secondAttribute="trailing" constant="8" id="rZM-PV-sRs"/>
+                    <constraint firstAttribute="trailing" secondItem="DJa-Bo-YZP" secondAttribute="trailing" constant="8" id="s1U-jL-FlM"/>
+                    <constraint firstItem="DHZ-x9-80r" firstAttribute="top" secondItem="eEL-rY-gVr" secondAttribute="bottom" constant="4" id="xbw-gS-v54"/>
+                    <constraint firstItem="DHZ-x9-80r" firstAttribute="top" secondItem="eEL-rY-gVr" secondAttribute="bottom" constant="4" id="zlH-6r-Jr4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
