@@ -104,6 +104,7 @@ static NSString *cellIdentifier = @"YelpTableViewCell";
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
     NSString * term = _searchBar.text;
     [self performSearchWithTerm:term];
 }
